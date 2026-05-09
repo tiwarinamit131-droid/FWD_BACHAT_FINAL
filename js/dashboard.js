@@ -23,7 +23,13 @@ document.addEventListener('DOMContentLoaded', function () {
     members.forEach(m => balances[m] = { paid: 0, owed: 0, net: 0 });
 
     groupExpenses.forEach(exp => {
-      exp.involved.forEach(mem => balances[mem].owed += exp.splitAmount);
+
+      const splitAmount = exp.amount / exp.involved.length;
+
+      exp.involved.forEach(mem => {
+        balances[mem].owed += splitAmount;
+      });
+
       balances[exp.paidBy].paid += exp.amount;
     });
 
