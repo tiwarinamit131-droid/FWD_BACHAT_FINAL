@@ -17,10 +17,12 @@ document.addEventListener('DOMContentLoaded', function () {
     groupedExpenses[exp.group].push(exp);
   });
 
-
   function calculateBalances(members, groupExpenses) {
     const balances = {};
-    members.forEach(m => balances[m] = { paid: 0, owed: 0, net: 0 });
+
+    members.forEach(m => {
+      balances[m] = { paid: 0, owed: 0, net: 0 };
+    });
 
     groupExpenses.forEach(exp => {
 
@@ -40,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
     return balances;
   }
 
- 
   if (totalExpensesDiv) {
     const total = expenses.reduce((sum, e) => sum + e.amount, 0);
 
@@ -52,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
     `;
   }
 
- 
   if (balanceSummaryDiv) {
     let html = `<h2>Group Breakdown</h2>`;
 
@@ -89,10 +89,8 @@ document.addEventListener('DOMContentLoaded', function () {
     balanceSummaryDiv.innerHTML = html;
   }
 
-
   if (balanceSummaryDiv) {
 
-   
     let maxGroup = null;
     let maxAmount = 0;
 
@@ -106,8 +104,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-
     const spending = {};
+
     expenses.forEach(e => {
       spending[e.paidBy] = (spending[e.paidBy] || 0) + e.amount;
     });
@@ -120,6 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const insightDiv = document.createElement('div');
     insightDiv.className = 'card';
+
     insightDiv.innerHTML = `
       <h2>Insights</h2>
       <p><strong>Most Expensive Group:</strong> ${maxGroup || 'N/A'} (₹${maxAmount.toFixed(2)})</p>
@@ -130,13 +129,19 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (expenseHistoryDiv) {
+
     if (expenses.length === 0) {
       expenseHistoryDiv.innerHTML = '<p>No expenses added yet.</p>';
+
     } else {
+
       expenseHistoryDiv.innerHTML = '';
+
       expenses.slice().reverse().forEach(exp => {
+
         const div = document.createElement('div');
         div.className = 'card';
+
         div.innerHTML = `
           <strong>${exp.title}</strong>
           <span style="float:right;">₹${exp.amount.toFixed(2)}</span><br>
@@ -146,13 +151,16 @@ document.addEventListener('DOMContentLoaded', function () {
           <span>Paid by: ${exp.paidBy}</span><br>
           <span>Split among: ${exp.involved.join(', ')}</span>
         `;
+
         expenseHistoryDiv.appendChild(div);
       });
     }
   }
 
   if (remindersListDiv) {
+
     const user = getLocalData('user', { name: '' });
+
     remindersListDiv.innerHTML = '';
 
     if (!user.name) {
@@ -163,19 +171,36 @@ document.addEventListener('DOMContentLoaded', function () {
     let hasReminders = false;
 
     groups.forEach(group => {
+
       if (!group.members.includes(user.name)) return;
 
       const groupExp = groupedExpenses[group.name] || [];
       const balances = calculateBalances(group.members, groupExp);
 
       if (balances[user.name].net < 0) {
+
         hasReminders = true;
 
         const div = document.createElement('div');
         div.className = 'card';
+
         div.innerHTML = `
           You owe ₹${(-balances[user.name].net).toFixed(2)} in <strong>${group.name}</strong>
         `;
+
+        remindersListDiv.appendChild(div);
+
+      } else if (balances[user.name].net > 0) {
+
+        hasReminders = true;
+
+        const div = document.createElement('div');
+        div.className = 'card';
+
+        div.innerHTML = `
+          You should receive ₹${balances[user.name].net.toFixed(2)} in <strong>${group.name}</strong>
+        `;
+
         remindersListDiv.appendChild(div);
       }
     });
