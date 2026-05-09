@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BACHAT | Add Expense</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">BACHAT</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="groups.html">Groups</a></li>
+        <li><a href="add_expense.html">Add Expense</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="analytics.html">Analytics</a></li>
+        <li><a href="reminders.html">Reminders</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="container">
+      <h1>Add Expense</h1>
+      <form id="expense-form" class="card">
+        <label for="expense-title">Expense Title</label>
+        <input type="text" id="expense-title" required>
+        <label for="expense-amount">Amount</label>
+        <div style="display:flex;gap:0.7rem;align-items:center;margin-bottom:1rem;">
+          <input type="number" id="expense-amount" min="1" required style="flex:2;">
+          <select id="expense-currency" style="flex:1;min-width:90px;">
+            <option value="INR">INR</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="JPY">JPY</option>
+            <option value="CNY">CNY</option>
+            <option value="CAD">CAD</option>
+            <option value="AUD">AUD</option>
+            <option value="SGD">SGD</option>
+            <option value="AED">AED</option>
+            <option value="CHF">CHF</option>
+            <option value="ZAR">ZAR</option>
+            <option value="BRL">BRL</option>
+            <option value="RUB">RUB</option>
+            <option value="KRW">KRW</option>
+            <option value="MXN">MXN</option>
+            <option value="THB">THB</option>
+            <option value="SEK">SEK</option>
+            <option value="NZD">NZD</option>
+            <option value="SAR">SAR</option>
+          </select>
+        </div>
+        <label for="expense-category">Category</label>
+        <select id="expense-category" required>
+          <option value="">Select</option>
+          <option value="Food">Food</option>
+          <option value="Travel">Travel</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Miscellaneous">Miscellaneous</option>
+        </select>
+        
+
+        <label for="expense-group">Select Group</label>
+        <select id="expense-group" required></select>
+
+        <label for="paid-by">Paid By</label>
+        <select id="paid-by" required></select>
+        <label>Members Involved</label>
+        <div id="members-checkboxes" class="members-checkboxes"></div>
+        <button type="submit" class="btn">Add Expense</button>
+        <div id="expense-form-msg" class="form-msg"></div>
+      </form>
+    </section>
+    
+  </main>
+  <footer>
+    <p>&copy; 2026 BACHAT |  FWD PROJECT </p>
+  </footer>
+  <script src="js/app.js"></script>
+  <script src="js/expenses.js"></script>
+</body>
+</html>
